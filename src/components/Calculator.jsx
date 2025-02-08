@@ -109,7 +109,7 @@ const Calculator = () => {
 
         <div className="flex flex-col items-center justify-center w-full md:w-1/2">
           <div className="flex flex-col items-center w-full p-6 bg-white rounded-lg shadow-lg" data-aos="zoom-in">
-            <h3 className="mb-4 text-xl font-bold text-gray-900">Hasil ROI</h3>
+            <h3 className="mb-4 text-2xl font-bold text-left text-gray-900">Hasil ROI</h3>
             <div className="px-6 py-2 text-3xl font-bold text-green-500 bg-gray-200 rounded-lg shadow-md">
               {roi}%
             </div>

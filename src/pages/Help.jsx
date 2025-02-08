@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const steps = [
   {
@@ -15,12 +17,12 @@ const steps = [
   {
     title: "Klik Tombol Hitung ROI",
     description:
-      "Sistem akan secara otomatis menghitung nilai ROI berdasarkan rumus yaitu, ROI = (Keuntungan bersih / Biaya Investasi) × 100.",
+      "Sistem akan secara otomatis menghitung nilai ROI berdasarkan rumus yaitu, ROI = (Keuntungan bersih / Biaya Investasi) × 100",
   },
   {
     title: "Melihat Hasil",
     description:
-      "Hasil perhitungan ROI akan ditampilkan dalam bentuk angka persentase. Jika nilai ROI positif, berarti investasi menguntungkan dan jika negatif, berarti investasi mengalami kerugian.",
+      "Hasil perhitungan ROI akan ditampilkan dalam bentuk angka persentase. Jika nilai ROI positif, berarti investasi menguntungkan, dan jika negatif, berarti investasi mengalami kerugian."
   },
   {
     title: "Visualisasi Hasil",
@@ -31,36 +33,68 @@ const steps = [
 
 const HowToUseROI = () => {
   useEffect(() => {
-    // Menyembunyikan navbar
-    const navbar = document.getElementById("Navbar"); 
+    AOS.init({ duration: 800, once: false });
+
+    const navbar = document.getElementById("Navbar");
     if (navbar) navbar.style.display = "none";
 
     return () => {
-      // Mengembalikan navbar saat keluar dari halaman
       if (navbar) navbar.style.display = "block";
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0A192F] flex items-center justify-center px-4 relative">
-      {/* Tombol Kembali */}
-      <Link to="#beranda" className="absolute top-6 left-6">
-        <img src="/arrowleft.svg" alt="Kembali" className="w-10 h-10 cursor-pointer" />
-      </Link>
+    <div
+      className="relative flex flex-col items-center justify-center min-h-screen px-4 py-8"
+      style={{ 
+        backgroundColor: "#0f172a", 
+        backgroundImage: "url('/bg-help.png')", 
+        backgroundSize: "cover", 
+        backgroundPosition: "center", 
+        backgroundBlendMode: "lighten" 
+      }}
+    >
+      {/* Header & Back Button */}
+      <div className="relative z-10 flex items-center justify-between w-full max-w-6xl px-4 mb-6 sm:mb-8">
+        <Link
+          to="/"
+          className="flex items-center justify-center w-10 h-10 transition-all bg-white rounded-full sm:w-12 sm:h-12 hover:bg-white/30"
+          data-aos="fade-right"
+        >
+          <img src="/arrowleft.svg" alt="Kembali" className="w-5 h-5 sm:w-6 sm:h-6" />
+        </Link>
 
-      <div className="w-full max-w-3xl p-6 border shadow-xl bg-white/10 backdrop-blur-lg md:p-8 rounded-2xl border-white/20">
-        <h1 className="mb-6 text-xl font-bold text-center text-white md:text-2xl">
+        <h1 
+          className="relative flex-1 text-2xl sm:text-4xl font-bold text-white max-w-[90%] sm:max-w-none sm:text-center text-center ml-auto mr-auto sm:ml-0 sm:mr-auto" 
+          data-aos="fade-up"
+        >
           Cara Menggunakan Kalkulator ROI
         </h1>
+
+      </div>
+
+      {/* Steps List */}
+      <div className="relative z-10 w-full p-6 shadow-xl sm:p-10 max-w-7xl bg-white/10 rounded-2xl border-white/20" data-aos="fade-up">
         <ul className="space-y-6">
           {steps.map((step, index) => (
-            <li key={index} className="flex items-start gap-4">
-              <div className="flex items-center justify-center w-12 h-12 text-lg font-bold text-black bg-yellow-500 rounded-full">
+            <li key={index} className="relative flex flex-wrap items-start gap-4 sm:flex-nowrap sm:gap-6">
+              {/* Step Number */}
+              <div
+                className="relative flex items-center justify-center flex-shrink-0 w-8 h-8 text-sm font-bold text-black bg-yellow-500 rounded-full sm:w-10 sm:h-10 sm:text-lg"
+                data-aos="fade-right"
+                data-aos-delay={index * 200}
+              >
                 {index + 1}
               </div>
-              <div>
-                <h2 className="text-lg font-semibold text-white">{step.title}</h2>
-                <p className="text-sm leading-relaxed text-gray-300">{step.description}</p>
+
+              {/* Step Text */}
+              <div className="relative flex-1 max-w-[90%]" data-aos="fade-left" data-aos-delay={index * 200}>
+                <h2 className="relative inline-block px-2 py-1 text-lg font-semibold text-white rounded-md sm:px-3 sm:py-1 sm:text-2xl bg-white/10">
+                  {step.title}
+                </h2>
+                <p className="relative mt-2 text-sm leading-relaxed text-white sm:text-lg">
+                  {step.description}
+                </p>
               </div>
             </li>
           ))}

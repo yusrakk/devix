@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Navbar = () => {
+  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const scrollTimeout = useRef(null);
 
   useEffect(() => {
@@ -18,12 +20,8 @@ const Navbar = () => {
         setScrolled(false);
       }
 
-      setHidden(true); // Sembunyikan navbar saat scrolling
-
-      // Hapus timeout sebelumnya untuk mencegah bug
+      setHidden(true);
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-
-      // Tampilkan navbar setelah scrolling berhenti
       scrollTimeout.current = setTimeout(() => {
         setHidden(false);
       }, 300);
@@ -36,9 +34,12 @@ const Navbar = () => {
     };
   }, []);
 
+  if (location.pathname === "/help") {
+    return null;
+  }
+
   return (
     <nav
-      id="Navbar" // Menambahkan ID pada navbar
       className={`fixed z-50 w-full py-4 transition-all duration-300 ${
         hidden ? "opacity-0 -translate-y-full" : "opacity-100 translate-y-0"
       } ${
@@ -50,25 +51,76 @@ const Navbar = () => {
       <div className="container flex items-center justify-between px-6 mx-auto">
         <h1 className="text-2xl font-bold text-gray-900">KALKULATOR ROI</h1>
 
-        <ul className="flex space-x-6 text-gray-900">
-          <li className="flex items-center space-x-2">
-            <img src="/home.svg" alt="Home" className="w-5 h-5 opacity-80" />
-            <a href="#beranda" className="transition duration-300 hover:text-blue-500">Beranda</a>
-          </li>
-          <li className="flex items-center space-x-2">
-            <img src="/calcu.svg" alt="Kalkulator" className="w-5 h-5 opacity-80" />
-            <a href="#kalkulator" className="transition duration-300 hover:text-blue-500">Kalkulator</a>
-          </li>
-          <li className="flex items-center space-x-2">
-            <img src="/about.svg" alt="Tentang" className="w-5 h-5 opacity-80" />
-            <a href="#tentang" className="transition duration-300 hover:text-blue-500">Tentang</a>
-          </li>
-          <li className="flex items-center space-x-2">
-            <img src="/help.svg" alt="Bantuan" className="w-5 h-5 opacity-80" />
-            <Link to="/help" className="transition duration-300 hover:text-blue-500">Bantuan</Link>
-          </li>
+        {/* Mobile Menu Icon */}
+        <button
+          className="lg:hidden focus:outline-none"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <img src="/menu.svg" alt="Menu" className="w-8 h-8" />
+        </button>
+
+        {/* Desktop Navigation */}
+        <ul className="hidden space-x-2 text-gray-900 lg:flex">
+          {[
+            { href: "#beranda", icon: "/home.svg", label: "Beranda" },
+            { href: "#kalkulator", icon: "/calcu.svg", label: "Kalkulator" },
+            { href: "#tentang", icon: "/about.svg", label: "Tentang" },
+            { to: "/help", icon: "/help.svg", label: "Bantuan" },
+          ].map((item, index) => (
+            <li key={index}>
+              {item.href ? (
+                <a
+                  href={item.href}
+                  className="flex items-center px-4 py-2 space-x-2 transition duration-300 rounded-md hover:bg-blue-100 active:bg-blue-500 focus:bg-blue-500"
+                >
+                  <img src={item.icon} alt={item.label} className="w-5 h-5 opacity-80" />
+                  <span>{item.label}</span>
+                </a>
+              ) : (
+                <Link
+                  to={item.to}
+                  className="flex items-center px-4 py-2 space-x-2 transition duration-300 rounded-md hover:bg-blue-100 active:bg-blue-500 focus:bg-blue-500"
+                >
+                  <img src={item.icon} alt={item.label} className="w-5 h-5 opacity-80" />
+                  <span>{item.label}</span>
+                </Link>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {menuOpen && (
+        <div className="absolute left-0 w-full p-4 bg-white shadow-lg top-16 lg:hidden">
+          <ul className="space-y-2 text-center text-gray-900">
+            {[
+              { href: "#beranda", label: "Beranda" },
+              { href: "#kalkulator", label: "Kalkulator" },
+              { href: "#tentang", label: "Tentang" },
+              { to: "/help", label: "Bantuan" },
+            ].map((item, index) => (
+              <li key={index}>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="block p-3 transition duration-300 rounded-md hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white focus:bg-blue-500 focus:text-white"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.to}
+                    className="block p-3 transition duration-300 rounded-md hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white focus:bg-blue-500 focus:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };
