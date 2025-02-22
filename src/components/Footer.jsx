@@ -28,7 +28,7 @@ const Footer = () => {
             <a href="https://www.tiktok.com/@devix.tech" target="_blank" rel="noopener noreferrer">
               <img src="/tt.svg" alt="Tiktok" className="w-8 h-8 transition-transform hover:scale-110" />
             </a>
-            <a href="https://instagram.com/devix_tech" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/devixtech.id/" target="_blank" rel="noopener noreferrer">
               <img src="/ig.svg" alt="Instagram" className="w-8 h-8 transition-transform hover:scale-110" />
             </a>
             <a href="mailto:devixtech.solutions@gmail.com">
