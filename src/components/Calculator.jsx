@@ -50,12 +50,30 @@ const Calculator = () => {
     ],
   };
 
+  const options = {
+    plugins: {
+      legend: {
+        display: false, // Sembunyikan legend default Chart.js karena kita buat custom
+      },
+    },
+  };
+
+  const getROIColor = () => {
+    if (roi <= 10) return "text-red-500";
+    if (roi <= 20) return "text-yellow-500";
+    if (roi <= 50) return "text-green-500";
+    return "text-blue-500";
+  };
+
   return (
     <section id="kalkulator" className="px-6 py-16 text-white bg-gray-900">
-      <div className="max-w-5xl mx-auto text-center" data-aos="fade-up">
+      <div className="max-w-5xl pt-16 mx-auto text-center" data-aos="fade-up">
         <h2 className="mb-4 text-3xl font-bold">Kalkulator ROI</h2>
-        <p className="text-xl leading-relaxed text-white">Masukkan data investasi dan keuntungan bersih untuk menghitung ROI.</p>
+        <p className="text-xl leading-relaxed text-white">
+          Masukkan data investasi dan keuntungan bersih untuk menghitung ROI.
+        </p>
       </div>
+
 
       <div className="flex flex-wrap justify-center gap-8 mt-8" data-aos="fade-up">
         <div className="w-full p-6 bg-gray-800 rounded-lg shadow-lg md:w-1/3">
@@ -110,11 +128,25 @@ const Calculator = () => {
         <div className="flex flex-col items-center justify-center w-full md:w-1/2">
           <div className="flex flex-col items-center w-full p-6 bg-white rounded-lg shadow-lg" data-aos="zoom-in">
             <h3 className="mb-4 text-2xl font-bold text-gray-900">Hasil ROI</h3>
-            <div className="px-6 py-2 text-3xl font-bold text-green-500 bg-gray-200 rounded-lg shadow-md">
+
+            <div className={`px-6 py-2 text-3xl font-bold bg-gray-200 rounded-lg shadow-md ${getROIColor()}`}>
               {roi}%
             </div>
-            <div className="w-64 h-64 mt-6">
-              <Doughnut data={data} />
+
+            {/* Legenda Custom Sejajar */}
+            <div className="flex items-center justify-center gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-6 h-3 bg-yellow-500"></span>
+                <span className="text-gray-700">Biaya Investasi</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-6 h-3 bg-green-500"></span>
+                <span className="text-gray-700">Keuntungan Bersih</span>
+              </div>
+            </div>
+
+            <div className="w-64 h-64 mt-4">
+              <Doughnut data={data} options={options} />
             </div>
           </div>
         </div>

@@ -44,23 +44,23 @@ const Navbar = () => {
         hidden ? "opacity-0 -translate-y-full" : "opacity-100 translate-y-0"
       } ${
         scrolled
-          ? "bg-white bg-opacity-30 backdrop-blur-lg shadow-lg"
-          : "bg-white"
+          ? "bg-black bg-opacity-30 backdrop-blur-lg shadow-lg"
+          : "bg-transparent"
       }`}
     >
       <div className="container flex items-center justify-between px-6 mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900">KALKULATOR ROI</h1>
+        <h1 className="text-2xl font-bold text-white">KALKULATOR ROI</h1>
 
         {/* Mobile Menu Icon */}
         <button
-          className="lg:hidden focus:outline-none"
+          className="p-2 rounded-md shadow-md lg:hidden focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <img src="/menu.svg" alt="Menu" className="w-8 h-8" />
         </button>
 
         {/* Desktop Navigation */}
-        <ul className="hidden space-x-2 text-gray-900 lg:flex">
+        <ul className="hidden space-x-2 text-white lg:flex">
           {[
             { href: "#beranda", icon: "/home.svg", label: "Beranda" },
             { href: "#kalkulator", icon: "/calcu.svg", label: "Kalkulator" },
@@ -71,7 +71,7 @@ const Navbar = () => {
               {item.href ? (
                 <a
                   href={item.href}
-                  className="flex items-center px-4 py-2 space-x-2 transition duration-300 rounded-md hover:bg-blue-100 active:bg-blue-500 focus:bg-blue-500"
+                  className="flex items-center px-4 py-2 space-x-2 transition duration-300 rounded-md hover:bg-white hover:bg-opacity-20"
                 >
                   <img src={item.icon} alt={item.label} className="w-5 h-5 opacity-80" />
                   <span>{item.label}</span>
@@ -79,7 +79,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   to={item.to}
-                  className="flex items-center px-4 py-2 space-x-2 transition duration-300 rounded-md hover:bg-blue-100 active:bg-blue-500 focus:bg-blue-500"
+                  className="flex items-center px-4 py-2 space-x-2 transition duration-300 rounded-md hover:bg-white hover:bg-opacity-20"
                 >
                   <img src={item.icon} alt={item.label} className="w-5 h-5 opacity-80" />
                   <span>{item.label}</span>
@@ -92,8 +92,8 @@ const Navbar = () => {
 
       {/* Mobile Navigation Menu */}
       {menuOpen && (
-        <div className="absolute left-0 w-full p-4 bg-white shadow-lg top-16 lg:hidden">
-          <ul className="space-y-2 text-center text-gray-900">
+        <div className="absolute w-48 p-4 bg-gray-800 rounded-md shadow-lg right-4 top-16 lg:hidden">
+          <ul className="space-y-2 text-center text-white">
             {[
               { href: "#beranda", label: "Beranda" },
               { href: "#kalkulator", label: "Kalkulator" },
@@ -104,14 +104,16 @@ const Navbar = () => {
                 {item.href ? (
                   <a
                     href={item.href}
-                    className="block p-3 transition duration-300 rounded-md hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white focus:bg-blue-500 focus:text-white"
+                    className="block p-3 transition duration-300 rounded-md hover:bg-blue-500 hover:text-white"
+                    onClick={() => setMenuOpen(false)}
                   >
                     {item.label}
                   </a>
                 ) : (
                   <Link
                     to={item.to}
-                    className="block p-3 transition duration-300 rounded-md hover:bg-blue-500 hover:text-white active:bg-blue-500 active:text-white focus:bg-blue-500 focus:text-white"
+                    className="block p-3 transition duration-300 rounded-md hover:bg-blue-500 hover:text-white"
+                    onClick={() => setMenuOpen(false)}
                   >
                     {item.label}
                   </Link>

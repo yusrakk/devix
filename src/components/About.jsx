@@ -62,7 +62,7 @@ const About = () => {
 
   return (
     <section id="tentang" className="px-6 py-24 text-center bg-[#0f172a] text-white">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl pt-8 mx-auto">
         <h2 className="mb-12 text-3xl font-bold" data-aos="fade-up">
           Tentang ROI
         </h2>
